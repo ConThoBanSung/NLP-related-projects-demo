@@ -1,27 +1,24 @@
-import openai
+import os
+from google import genai
 import streamlit as st
 
-# Thay API Key thật của bạn vào đây
-openai.api_key = "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"  # Thay bằng API Key thật
+# Nhập API Key từ Google Gemini
+client = genai.Client(api_key=os.environ.get("GOOGLE_API_KEY"))  # Đảm bảo rằng bạn đã thiết lập API Key trong biến môi trường
 
-# Hàm gọi API OpenAI
+# Hàm gọi API Gemini
 def answers_questions(text):
     try:
-        response = openai.ChatCompletion.create(
-            model="gpt-4o",  
-            messages=[
-                {"role": "system", "content": "You are a helpful AI assistant that helps with business Q&A (answer only in 100 tokens)"},
-                {"role": "user", "content": f"Answer the question: {text}"}
-            ],
-            max_tokens=200
+        response = client.models.generate_content(
+            model="gemini-2.0-flash",  # Dùng mô hình Gemini
+            contents=f"Imagine that you are technical supprter in business. Answer the question: {text}",  # Truyền câu hỏi vào
         )
-        answer = response["choices"][0]["message"]["content"].strip()
+        answer = response.text.strip()
         return answer
     except Exception as e:
         return f"Lỗi khi gọi API: {e}"
 
 # Giao diện với Streamlit
-st.title("ChatGPT Business Q&A")
+st.title("ChatAI Business Q&A")
 st.write("Nhập câu hỏi vào ô bên dưới:")
 
 # Ô nhập câu hỏi
@@ -35,4 +32,3 @@ if st.button("Gửi"):
         st.write(answer)
     else:
         st.warning("Vui lòng nhập câu hỏi!")
-
