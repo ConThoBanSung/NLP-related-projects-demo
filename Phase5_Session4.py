@@ -1,36 +1,32 @@
-import os
-from google import genai
 import streamlit as st
+from google import genai
 
-# Nhập API Key từ Google Gemini
-api_key = "AIzaSyBm2qwV2cZ5jN_31QWK-mGoJOgcAhoM4T0"
+# Thêm thẳng API Key vào code
+api_key = "AIzaSyBm2qwV2cZ5jN_31QWK-mGoJOgcAhoM4T0"  # Thay "your_api_key_here" bằng API key thật của bạn
 
 # Khởi tạo client Gemini với API key
 client = genai.Client(api_key=api_key)
-# Hàm gọi API Gemini
-def answers_questions(text):
-    try:
-        response = client.models.generate_content(
-            model="gemini-2.0-flash",  # Dùng mô hình Gemini
-            contents=f"Imagine that you are technical supprter in business. Answer the question: {text}",  # Truyền câu hỏi vào
-        )
-        answer = response.text.strip()
-        return answer
-    except Exception as e:
-        return f"Lỗi khi gọi API: {e}"
 
-# Giao diện với Streamlit
-st.title("ChatAI Business Q&A")
-st.write("Nhập câu hỏi vào ô bên dưới:")
+# Hàm phân loại cảm xúc
+def classify_sentiment(text):
+    # Gửi yêu cầu đến Gemini API
+    response = client.models.generate_content(
+        model="gemini-2.0-flash",  # Dùng mô hình Gemini
+        contents=f"Classify the sentiment of the following review in one word: {text}",
+    )
+    
+    # Trích xuất cảm xúc từ phản hồi
+    sentiment = response.text.strip()
+    return sentiment
 
-# Ô nhập câu hỏi
-question = st.text_input("Câu hỏi:")
+# Giao diện người dùng Streamlit
+st.title("Phân loại Cảm xúc Đánh giá")
+st.write("Nhập một đánh giá sản phẩm và AI sẽ phân loại cảm xúc của nó.")
 
-# Nút gửi yêu cầu
-if st.button("Gửi"):
-    if question:
-        answer = answers_questions(question)
-        st.subheader("Câu trả lời:")
-        st.write(answer)
-    else:
-        st.warning("Vui lòng nhập câu hỏi!")
+# Tạo input để người dùng nhập văn bản
+user_input = st.text_area("Nhập đánh giá:", "The product is great! I really love it.")
+
+# Nút để người dùng gửi đánh giá
+if st.button("Phân loại cảm xúc"):
+    sentiment = classify_sentiment(user_input)
+    st.write(f"Cảm xúc dự đoán: {sentiment}")
