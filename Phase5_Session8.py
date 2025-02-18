@@ -3,8 +3,10 @@ from google import genai
 import streamlit as st
 
 # Nhập API Key từ Google Gemini
-client = genai.Client(api_key=os.environ.get("GOOGLE_API_KEY"))  # Đảm bảo rằng bạn đã thiết lập API Key trong biến môi trường
+api_key = "AIzaSyBm2qwV2cZ5jN_31QWK-mGoJOgcAhoM4T0"
 
+# Khởi tạo client Gemini với API key
+client = genai.Client(api_key=api_key)
 # Hàm gọi API Gemini
 def answers_questions(text):
     try:
