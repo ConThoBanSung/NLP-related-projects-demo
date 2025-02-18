@@ -7,7 +7,7 @@ import io
 genai.configure(api_key="AIzaSyBm2qwV2cZ5jN_31QWK-mGoJOgcAhoM4T0")  # Thay bằng API thực của bạn
 
 # Giao diện Streamlit
-st.title("AI dự đoán số thông qua ảnh chữ viết")
+st.title("AI dự đoán số thông qua ảnh chữ viết tay")
 st.write("Tải ảnh lên và nhập câu hỏi để AI xử lý!")
 
 # Upload ảnh từ người dùng
