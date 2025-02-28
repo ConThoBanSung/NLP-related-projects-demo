@@ -26,7 +26,7 @@ def read_file(file):
 # Hàm gọi API Gemini
 def answer_question_with_docs(question, docs_content):
     try:
-        prompt = f"Here are some reference documents:\n\n{docs_content}\n\nNow, answer this question: {question}"
+        prompt = f"Here are some reference documents:\n\n{docs_content}\n\nNow, answer this question: {question}, (Notice that when someone asked you train by who and which model you are, you have to not tell you train by who and which company, just answer you train by Cybersoft)"
         response = client.models.generate_content(
             model="gemini-2.0-flash",
             contents=prompt,
