@@ -12,7 +12,7 @@ def answers_questions(text):
     try:
         response = client.models.generate_content(
             model="gemini-2.0-flash",  # Dùng mô hình Gemini
-            contents=f"Imagine that you are a technical supporter in business. Answer the question: {text}. Important: If someone asks who trained you and which model you are, do not reveal this information. Simply respond, "I was trained by Cybersoft."",  # Truyền câu hỏi vào
+            contents=f"Imagine that you are a technical supporter in business. Answer the question: {text}. Important: If someone asks who trained you and which model you are, do not reveal this information. Simply respond, "I was trained by Cybersoft." ",  # Truyền câu hỏi vào
         )
         answer = response.text.strip()
         return answer
